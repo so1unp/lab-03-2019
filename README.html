@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.line-block{white-space: pre-line;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="laboratorio-3---procesos-hilos-y-planificación">Laboratorio 3 - Procesos, Hilos y Planificación</h1>
+<p><strong>Nota</strong>: respondan las preguntas que se realizan en el laboratorio, en el archivo <code>respuestas.txt</code>, indicando el ejercicio.</p>
+<h2 id="ejercicio-1">Ejercicio 1</h2>
+<p>El programa <code>proc.c</code> crea tantos procesos hijos como se le indique por la línea de comandos. Ejecutarlo creando 5, 10 y 20 procesos hijos. ¿Por qué es posible que el orden de terminación de los procesos no sea el de su creación?</p>
+<h2 id="ejercicio-2">Ejercicio 2</h2>
+<p>Completar el programa <code>thread.c</code>, que debe crear un hilo que imprime <code>¡Hola!</code> múltiples veces por pantalla. Estas son las funciones que deben completar:</p>
+<ul>
+<li><code>pthread_create</code> (<a href="http://man7.org/linux/man-pages/man3/pthread_create.3.html"><em>manual</em></a>): crea un hilo.</li>
+<li><code>pthread_join</code> (<a href="http://man7.org/linux/man-pages/man3/pthread_join.3.html"><em>manual</em></a>): espera por que un hilo específico finalice.</li>
+<li><code>pthread_exit</code> (<a href="http://man7.org/linux/man-pages/man3/pthread_exit.3.html"><em>manual</em></a>): termina con la ejecución de un hilo.</li>
+</ul>
+<p>Una vez que el programa este completo, al ejecutarlo tendrían que ver una salida similar a la siguiente:</p>
+<pre><code>$ bin/thread 3
+[0] ¡Hola!
+[1] ¡Hola!
+[2] ¡Hola!
+El hilo finalizó.
+$
+</code></pre>
+<p>Una vez que tengan el programa funcionando, responder:</p>
+<ol>
+<li>¿Que sucede si comentan la funcion <code>pthred_join()</code>, y vuelven a ejecutar el programa? ¿Por qué?</li>
+<li>Mantener comentado <code>pthread_join()</code>, y reemplazar en <code>main()</code> la invocación a <code>exit()</code> por una invocación a <code>pthread_exit()</code>. ¿Qué sucede ahora? ¿Por qué?</li>
+</ol>
+<h2 id="ejercicio-3">Ejercicio 3</h2>
+<p>Completar el programa <code>threads.c</code>, que crea tantos hilos como se le indique por la línea de comandos. Cada hilo imprime un mensaje, y un número que le es pasado como parámetro al momento de crearlo. Deben completar la invocación de las mismas funciones que en el <strong>Ejercicio 2</strong>, más la función <code>pthread_detach</code> (<a href="http://man7.org/linux/man-pages/man3/pthread_detach.3.html"><em>manual</em></a>).</p>
+<p>En este programa al hilo <code>main</code> no le interesa el resultado de los hilos creados, por lo que no realiza luego un <em>join</em> sobre cada hilo. La funcion <code>pthread_detach()</code> indica esto, de manera que, cuando el hilo invoca <code>pthread_exit()</code>, el sistema operativo sabe que no debe mantener ningún dato del hilo (por ejemplo, para que otro hilo pueda realizar un <em>join</em> sobre el mismo).</p>
+<h2 id="ejercicio-4">Ejercicio 4</h2>
+<p>Completar el programa <code>forkvsthread.c</code>, que crea una cierta cantidad de procesos hijos o de hilos, según se le indique. Cada vez que crea un proceso hijo o hilo, espera a que el mismo termine antes de continuar creando el resto. Deben completar las invocaciones necesarias para crear los hilos (las mismas que en el <strong>Ejercicio 2</strong>).</p>
+<p>Lo que vamos a hacer en este ejercicio es comparar cuanto cuesta crear un mismo número de hilos comparado con el mismo número de procesos hijos. Para esto vamos a utilizar el comando <a href="http://man7.org/linux/man-pages/man1/time.1.html"><code>time</code></a>, que nos indica cuanto tiempo consumió la ejecución de un programa.</p>
+<p>Una vez que tengan el programa funcionando, ejecutar los siguientes comandos:</p>
+<pre><code>$ /usr/bin/time -p bin/forkvsthread 1 1000
+$ /usr/bin/time -p bin/forkvsthread 2 1000
+</code></pre>
+<p><strong>Nota</strong>: es importante usar el <em>path</em> completo (<code>/usr/bin/time</code>), para no ejecutar el comando <code>time</code> provisto por el <em>shell</em>.</p>
+<p>Responder:</p>
+<ol>
+<li>¿Cual de las dos variantes tuvo menos costo, la creación de hilos o la creación de procesos? ¿Por qué?</li>
+</ol>
+<hr />
+<p>¡Fin del Laboratorio 3!</p>
+</body>
+</html>
