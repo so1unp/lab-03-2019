@@ -1,4 +1,4 @@
-# Laboratorio 3 - Procesos, Hilos y Planificación
+# Laboratorio 3 - Procesos, Hilos y Planificación [DEPRECADO]
 
 **Nota**: respondan las preguntas que se realizan en el laboratorio, en el archivo `respuestas.txt`, indicando el ejercicio.
 
